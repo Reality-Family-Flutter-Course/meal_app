@@ -13,9 +13,15 @@ class _FavoutiteMealsPageState extends State<FavoutiteMealsPage> {
   @override
   Widget build(BuildContext context) {
     if (MockData.getFavouriteMeals.isEmpty) {
-      return const Center(
-        child: Text(
-          "У Вас нет пока избранных блюд - время добавить новое",
+      return const Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 60,
+        ),
+        child: Center(
+          child: Text(
+            "У Вас нет пока избранных блюд - время добавить новое",
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     } else {

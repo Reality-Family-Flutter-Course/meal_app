@@ -35,7 +35,6 @@ class _MealDetailPageState extends State<MealDetailPage> {
       ),
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
-      height: 200,
       child: child,
     );
   }
@@ -51,52 +50,58 @@ class _MealDetailPageState extends State<MealDetailPage> {
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 300,
-              width: double.infinity,
-              child: Image.network(
-                meal.imageUrl,
-                fit: BoxFit.cover,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 300,
+                width: double.infinity,
+                child: Image.network(
+                  meal.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            buildSectionTitle("Ингредиенты"),
-            buildContainer(
-              ListView.builder(
-                itemCount: meal.ingredients.length,
-                itemBuilder: (context, index) => Card(
-                  color: Theme.of(context).colorScheme.secondary,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 10,
-                    ),
-                    child: Text(
-                      meal.ingredients[index],
-                      textAlign: TextAlign.center,
+              buildSectionTitle("Ингредиенты"),
+              buildContainer(
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: meal.ingredients.length,
+                  itemBuilder: (context, index) => Card(
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                        horizontal: 10,
+                      ),
+                      child: Text(
+                        meal.ingredients[index],
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            buildSectionTitle("Этапы приготовления"),
-            buildContainer(ListView.builder(
-              itemBuilder: (context, index) => Column(
-                children: [
-                  ListTile(
-                    leading: CircleAvatar(
-                      child: Text("# ${index + 1}"),
+              buildSectionTitle("Этапы приготовления"),
+              buildContainer(ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => Column(
+                  children: [
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Text("# ${index + 1}"),
+                      ),
+                      title: Text(meal.steps[index]),
                     ),
-                    title: Text(meal.steps[index]),
-                  ),
-                  const Divider()
-                ],
-              ),
-              itemCount: meal.steps.length,
-            )),
-          ],
+                    const Divider()
+                  ],
+                ),
+                itemCount: meal.steps.length,
+              )),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
